@@ -17,19 +17,25 @@ function LeftSide(props) {
         </UserInfo>
         <Widget>
           <a>
-
             <div>
-            <span>Who's viewed your profile</span>
+              <span>Who's viewed your profile</span>
+            </div>
+            <p>11</p>
+          </a>
+
+          <a>
+            <div>
               <span>Connections</span>
               <span>Manage your network</span>
             </div>
-            <img src="/images/widget-icon.svg" alt="" />
+            {/* <img src="/images/widget-icon.svg" alt="" /> */}
+            <p>796</p>
           </a>
         </Widget>
         <Item>
           <span>
             <img src="/images/item-icon.svg" alt="" />
-            My items
+            <p>My items</p>
           </span>
         </Item>
       </ArtCard>
@@ -47,7 +53,7 @@ function LeftSide(props) {
           <span>Followed Hashtags</span>
         </a>
         <a>
-          <span>Discover more</span>
+          <p>Discover more</p>
         </a>
       </CommunityCard>
     </Container>
@@ -109,56 +115,7 @@ const AddPhotoText = styled.div`
   font-weight: 400;
 `;
 
-// const Widget = styled.div`
-//   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-//   padding-top: 12px;
-//   padding-bottom: 12px;
-//   text-align: left;
-//   & > a {
-//     text-decoration: none;
-//     /* display: flex; */
-//     /* justify-content: space-between;
-//     align-items: center;
-//     padding: 4px 12px; */
 
-//     div {
-//       /* display: flex; */
-//       /* flex-direction: column;
-//       text-align: left; */
-//       &:first-child{
-//         display: flex;
-//         flex-direction: row;
-//         justify-content: space-between;
-//         align-items: center;
-//       }
-//       &:nth-child(2){
-//         display: flex;
-//         flex-direction: column;
-//       }
-//       span {
-//         font-size: 12px;
-//         line-height: 1.333;
-//         font-weight: 600;
-//         &:hover {
-//       background-color: rgba(0, 0, 0, 0.08);
-//     }
-//         &:first-child{
-//           color: rgba(0, 0, 0, 0.6);
-//           margin-bottom: 7px;
-//         }
-//         &:nth-child(2) {
-//           color: rgba(0, 0, 0, 0.6);
-//         }
-//         &:nth-child(3) {
-//           color: rgba(0, 0, 0, 1);
-//         }
-//       }
-//     }
-//     svg {
-//       color: rgba(0, 0, 0, 1);
-//     }
-//   }
-// `;
 const Widget = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding-top: 12px;
@@ -168,28 +125,29 @@ const Widget = styled.div`
     text-decoration: none;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding: 4px 12px;
     font-weight: bold;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    p{
+      color: #3893ef;
+      font-weight: 600;
+      font-size: 11px;
+    }
 
     div {
       display: flex;
       flex-direction: column;
       text-align: left;
       span {
-        &:hover {
-        background-color: rgba(0, 0, 0, 0.08);
-      }
         font-size: 12px;
         line-height: 1.333;
         &:first-child {
           color: rgba(0, 0, 0, 0.6);
-          margin-bottom: 7px;
         }
         &:nth-child(2) {
-          color: rgba(0, 0, 0, 0.6);
-        }
-        &:nth-child(3) {
           color: rgba(0, 0, 0, 1);
         }
       }
@@ -210,9 +168,14 @@ const Item = styled.div`
   span {
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 1);
+    /* color: rgba(0, 0, 0, 1); */
+    p{
+      margin-left: 7px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.7);
+    }
     svg {
-      color: rgba(0, 0, 0, 0.6);
+      color: rgba(0, 0, 0, 0.7);
     }
   }
   &:hover {
@@ -225,6 +188,7 @@ const CommunityCard = styled(ArtCard)`
   display: flex;
   flex-direction: column;
   font-weight: 600;
+
   a {
     color: #0a66c2;
     padding: 4px 12px 4px 12px;
@@ -232,6 +196,7 @@ const CommunityCard = styled(ArtCard)`
     &:hover {
       text-decoration: underline;
     }
+
     span {
       display: flex;
       align-items: center;
@@ -241,7 +206,9 @@ const CommunityCard = styled(ArtCard)`
       color: rgba(0, 0, 0, 0.6);
       text-decoration: none;
       border-top: 1px solid #d6cec2;
-      padding: 12px;
+      padding: 14px;
+      text-align: center;
+
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.08);
