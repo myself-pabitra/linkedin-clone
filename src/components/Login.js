@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-
+import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <Container>
@@ -15,46 +15,42 @@ const Login = () => {
       </Nav>
       {/* This is main section  */}
 
-        <Section>
-          {/* Starting of Hero component  */}
-          <Hero>
-            <h1>Welcome to your professional community</h1>
-            {/* Form Section starts here  */}
-            <Form>
-              <LoginForm>
-                {/* Email section */}
-                <EmailOrPhone>
-                  <label htmlFor="emailorphone">Email or phone</label>
-                  <input type="text" name="emailorphone" id="emailorphone" />
-                </EmailOrPhone>
-                {/* Password Section */}
-                <Password>
-                  <label htmlFor="password">Password</label>
-                  <input type="password" name="password" id="password" />
-                </Password>
-                {/* Sign in button section */}
-                <SignInButton>
-                  <a href="#">Sign in</a>
-                </SignInButton>
-              </LoginForm>
-              {/* devider starts here  */}
-              <Devider>
-                <Done></Done>
-                <p>or</p>
-                <Dtwo></Dtwo>
-              </Devider>
-              {/* Sign in with google button  */}
-              <Google>
-                <img src="images/google.svg" alt="" />
-                Sign in with Google
-              </Google>
-            </Form>
-            {/* form section ends here  */}
-            {/* Hero Image section  */}
-            <img src="/images/login-hero.svg" alt="" srcset="" />
-          </Hero>
-          {/* Hero Section ends  */}
-        </Section>
+      <Section>
+        <LeftSide>
+          <SectionHeading>
+            Welcome to your professional community
+          </SectionHeading>
+
+          <InputDiv>
+            <input
+              required
+              placeholder="Email or username"
+              type="text"
+              id="username"
+            />
+            <div className="pass-container">
+              <input required placeholder="Password" type="" id="password" />
+              <strong onClick="">show</strong>
+            </div>
+            <Link to="/forget-pass">
+              <p>Forgot password?</p>
+            </Link>
+            <p className="error"></p>
+          </InputDiv>
+          <SingUp type="submit" onClick="">
+            Login
+          </SingUp>
+          <div className="button-divider">or</div>
+          <SignInGoogle type="submit" onClick="">
+            <img src="/images/google.svg" alt="" />
+            <span>Login with Google</span>
+          </SignInGoogle>
+        </LeftSide>
+
+        <RightSide>
+          <img loading="lazy" src="/images/welcome-hero.svg" alt="" />
+        </RightSide>
+      </Section>
 
       {/* Whole section ends  */}
     </Container>
@@ -121,174 +117,228 @@ const SignIn = styled.a`
 
 const Section = styled.div`
   display: flex;
-  /* align-content: start; */
-  min-height: 700px;
-  padding-bottom: 138px;
-  padding-top: 40px;
-  padding: 60px 0;
-  position: relative;
-  flex-wrap: wrap;
+  max-width: var(--container-size);
+  margin: 0 auto;
   width: 100%;
-  max-width: 1128px;
-  align-items: center;
-  margin: auto;
+  align-items: flex-end;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 740px) {
     flex-direction: column;
-    /* margin: auto; */
-    margin-top: 25px;
-    min-height: 0;
-    padding: 0;
+    align-items: center;
   }
 `;
-const Hero = styled.div`
-  width: 100%;
-  h1 {
-    padding-bottom: 0;
-    width: 55%;
-    font-size: 56px;
-    font-weight: 200;
-    color: #8f5849;
-    line-height: 70px;
-    @media (max-width: 767px) {
-      text-align: center;
-      font-size: 31px;
-      font-weight: inherit;
-      width: 100%;
-      line-height: 2;
+const LeftSide = styled.div`
+  width: 40%;
+
+  /* Button Divider - (--OR--) */
+  .button-divider {
+    width: 100%;
+    text-align: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+    align-items: center;
+    color: var(--dark-gray);
+    margin: 1.5rem 0;
+    letter-spacing: 3px;
+    font-size: 15px;
+
+    /* Divider Lines */
+    &::after,
+    &::before {
+      content: "";
+      background-color: var(--dark-gray);
+      height: 1px;
     }
   }
+
+  @media screen and (max-width: 740px) {
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+`;
+
+const RightSide = styled.div`
+  width: 60%;
+  margin-left: 5%;
+  overflow: hidden;
+
   img {
-    z-index: -1;
-    width: 730px;
-    height: 690px;
-    position: absolute;
-    /* bottom: -2px; */
-    bottom: 174px;
-    right: -150px;
-    @media (max-width: 768px) {
-      top: 230px;
-      width: initial;
-      position: initial;
-      height: initial;
+    height: 100%;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 1027px) {
+    height: 590px;
+  }
+
+  @media screen and (max-width: 740px) {
+    width: 90%;
+    height: fit-content;
+
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 `;
+const SectionHeading = styled.div`
+  font-weight: 200;
+  font-size: 3.5rem;
+  font-family: var(--open-sans-font);
+  color: var(--brown-color);
+  margin-bottom: 2rem;
 
-const Form = styled.div`
-  /* width: 408px; */
-`;
-
-const LoginForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
-
-const EmailOrPhone = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-
-  label {
-    font-size: 18px;
-    font-weight: 100;
-    /* padding: 5px; */
-    margin-bottom: 5px;
+  @media screen and (max-width: 1190px) {
+    font-size: 3rem;
   }
+
+  @media screen and (max-width: 1027px) {
+    font-size: 2.5rem;
+  }
+
+  @media screen and (max-width: 890px) {
+    font-size: 2rem;
+  }
+`;
+const InputDiv = styled.div`
   input {
-    width: 380px;
-    height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.6);
+    border: 1px solid;
+    background: white;
+    width: 100%;
+    height: 60%;
     border-radius: 5px;
-  }
-`;
-const Password = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-
-  label {
+    padding: 0.9rem 1rem;
     font-size: 18px;
-    font-weight: 100;
-    /* padding: 5px; */
-    margin-bottom: 5px;
+    color: var(--dark-gray);
+    margin-bottom: 0.7rem;
+    background-color: white;
   }
-  input {
-    width: 380px;
-    height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.6);
-    border-radius: 5px;
-  }
-`;
-// Check with this for imput fields for styling
-const SignInButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0077b5;
-  height: 56px;
-  width: 100%;
-  border-radius: 28px;
-  margin-top: 18px;
-  vertical-align: middle;
-  font-size: 15px;
-
-  cursor: pointer;
-  a {
-    color: #f5f5f5;
-    text-decoration: none;
+  input:focus {
+    outline: none;
   }
 
-  &:hover {
-    background-color: #005e8b;
+  /* error occured input fields */
+  input.wrong {
+    background-color: #ff000033;
   }
-`;
 
-const Devider = styled.div`
-  display: flex;
-  flex-direction: row;
+  /* Password Input Container */
+  .pass-container {
+    position: relative;
 
+    /* pass input-field */
+    input {
+      /* padding-right: 65px; */
+    }
+
+    /* Show/Hide Button */
+    strong {
+      user-select: none;
+      position: absolute;
+      right: -12px;
+      top: 30%;
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: var(--dark-gray);
+      letter-spacing: 1px;
+
+      &:hover {
+        cursor: pointer;
+      }
+      @media screen and (max-width: 768px ) {
+        right: 8px;
+  }
+    }
+  }
+
+  /* Form-error text */
+  .error {
+    color: red;
+    font-size: 15px;
+    margin-bottom: -0.6rem;
+  }
+
+  /* Forget-Pass */
   p {
-    color: rgba(0, 0, 0, 0.9);
-    font-size: 14px;
-    margin: 10px;
-    margin-left: 16px;
-    margin-right: 16px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 4px;
+  }
+
+  @media screen and (max-width: 890px) {
+    /* Both Input Box */
+    input {
+      padding: 1rem 1rem;
+      font-size: 16px;
+      width: -webkit-fill-available;
+}
+    }
+
+    /* Forget-Pass */
+    p {
+      font-size: 1rem;
+    }
+  
+
+  @media screen and (max-width: 360px) {
+    input,
+    p {
+      font-size: 14px;
+    }
   }
 `;
-const Done = styled.div`
+const button = styled.button`
   width: 100%;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.4);
-  margin: 20px 0;
-`;
-const Dtwo = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.4);
-  margin: 20px 0;
-`;
-const Google = styled.button`
   display: flex;
-  justify-content: center;
-  background-color: #fff;
   align-items: center;
-  height: 56px;
-  width: 100%;
-  border-radius: 28px;
-  box-shadow: inset 0 0 0 1px rgb(0 0 0 /60%),
-    inset 0 0 0 2px rgb(0 0 0 / 0%) inset 0 0 0 1px rgb(0 0 0 / 0);
-  vertical-align: middle;
-  z-index: 0;
-  transition-duration: 167ms;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
   cursor: pointer;
+  transition: var(--quick-transition);
+  letter-spacing: 1.5px;
+  padding: 0.6rem;
+  line-height: 1.3;
+  border-radius: 30px;
+  font-size: 20px;
+
+  img {
+    height: 25px;
+    margin-right: 25px;
+  }
 
   &:hover {
-    background-color: rgba(207, 207, 207, 0.25);
-    color: rgba(0, 0, 0, 0.75);
+    background-color: var(--light-white);
   }
+
+  @media screen and (max-width: 890px) {
+    font-size: 1rem;
+    img {
+      height: 22px;
+      margin-right: 17px;
+    }
+  }
+
+  @media screen and (max-width: 740px) {
+    font-size: 1.3rem;
+  }
+
+  @media screen and (max-width: 360px) {
+    font-size: 16px;
+  }
+`;
+const SingUp = styled(button)`
+  margin-top: 2rem;
+  background: var(--primary-color);
+  color: white;
+
+  &:hover {
+    background: var(--light-primary-color);
+  }
+`;
+const SignInGoogle = styled(button)`
+  border: 1px solid var(--dark-gray);
+  color: var(--dark-gray);
 `;
