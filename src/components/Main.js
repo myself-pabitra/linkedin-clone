@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-
+import PostModal from "./PostModal";
 function Main() {
   return (
     <Container>
@@ -28,7 +28,6 @@ function Main() {
           </button>
         </div>
       </ShareBox>
-
       <div>
         <Article>
           <ShareActor>
@@ -84,6 +83,7 @@ function Main() {
           </SocialActions>
         </Article>
       </div>
+      <PostModal />
     </Container>
   );
 }

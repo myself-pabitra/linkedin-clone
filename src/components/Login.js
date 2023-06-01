@@ -1,9 +1,15 @@
 import React from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-const Login = () => {
+import { connect } from "react-redux";
+import { signInAPI } from "../actions";
+import { useNavigate } from "react-router-dom";
+
+const Login = (props) => {
+  const navigate = useNavigate();
   return (
     <Container>
+      {props.user && navigate("/home")}
       <Nav>
         <a href="/">
           <img src="/images/login-logo.svg" alt="Linkedin nav logo" />
@@ -14,7 +20,6 @@ const Login = () => {
         </div>
       </Nav>
       {/* This is main section  */}
-
       <Section>
         <LeftSide>
           <SectionHeading>
@@ -29,7 +34,12 @@ const Login = () => {
               id="username"
             />
             <div className="pass-container">
-              <input required placeholder="Password" type="" id="password" />
+              <input
+                required
+                placeholder="Password"
+                type="password"
+                id="password"
+              />
               <strong onClick="">show</strong>
             </div>
             <Link to="/forget-pass">
@@ -41,7 +51,7 @@ const Login = () => {
             Login
           </SingUp>
           <div className="button-divider">or</div>
-          <SignInGoogle type="submit" onClick="">
+          <SignInGoogle onClick={() => props.signIn()}>
             <img src="/images/google.svg" alt="" />
             <span>Login with Google</span>
           </SignInGoogle>
@@ -51,14 +61,10 @@ const Login = () => {
           <img loading="lazy" src="/images/welcome-hero.svg" alt="" />
         </RightSide>
       </Section>
-
       {/* Whole section ends  */}
     </Container>
   );
 };
-
-export default Login;
-
 const Container = styled.div`
   padding: 0px;
 `;
@@ -249,9 +255,9 @@ const InputDiv = styled.div`
       &:hover {
         cursor: pointer;
       }
-      @media screen and (max-width: 768px ) {
+      @media screen and (max-width: 768px) {
         right: 8px;
-  }
+      }
     }
   }
 
@@ -275,14 +281,13 @@ const InputDiv = styled.div`
       padding: 1rem 1rem;
       font-size: 16px;
       width: -webkit-fill-available;
-}
     }
+  }
 
-    /* Forget-Pass */
-    p {
-      font-size: 1rem;
-    }
-  
+  /* Forget-Pass */
+  p {
+    font-size: 1rem;
+  }
 
   @media screen and (max-width: 360px) {
     input,
@@ -342,3 +347,16 @@ const SignInGoogle = styled(button)`
   border: 1px solid var(--dark-gray);
   color: var(--dark-gray);
 `;
+
+// ------------------------------------------------------
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  signIn: () => dispatch(signInAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
