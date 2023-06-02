@@ -92,6 +92,7 @@ const CardBackground = styled.div`
 const Photo = styled.div`
   box-shadow: none;
   background-image: url("/images/photo.svg");
+
   width: 72px;
   height: 72px;
   box-sizing: border-box;

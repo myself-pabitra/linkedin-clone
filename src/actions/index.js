@@ -1,6 +1,7 @@
-import { auth, provider } from "../firebase";
+import { auth, provider, storage } from "../firebase";
+import db from "../firebase";
 import { SET_USER } from "./actionType";
-
+import { ref, uploadBytes } from "firebase/storage";
 export const setUser = (payload) => ({
   type: SET_USER,
   user: payload,
@@ -38,5 +39,58 @@ export function signOutAPI() {
       .catch((error) => {
         console.log(error.message);
       });
+  };
+}
+
+export function postArticleAPI(payload) {
+  return (dispatch) => {
+    const storageRef = ref(storage, `images/${payload.image.name}`);
+    const upload = uploadBytes(storageRef, payload.image);
+    // dispatch(setLoading(true));
+
+    if (payload.image != "") {
+      upload.on =
+        ("state-changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          console.log(`Progress: ${progress}%`);
+          if (snapshot.state === "RUNNING") {
+            console.log(`Progress: ${progress}%`);
+          }
+        },
+        (error) => console.log(error.code),
+        async () => {
+          const downloadURL = await upload.snapshot.storageRef.getDownloadURL();
+          db.collection("articles").add({
+            actor: {
+              description: payload.user.email,
+              title: payload.user.displayName,
+              date: payload.timestamp,
+              image: payload.user.photoURL,
+            },
+            video: payload.video,
+            sharedImg: downloadURL,
+            comments: 0,
+            description: payload.description,
+          });
+          // dispatch(setLoading(false));
+        });
+    } else if (payload.video) {
+      db.collection("articles").add({
+        actor: {
+          description: payload.user.email,
+          title: payload.user.displayName,
+          date: payload.timestamp,
+          image: payload.user.photoURL,
+        },
+        video: payload.video,
+        sharedImg: "",
+        comments: 0,
+        description: payload.description,
+      });
+      // dispatch(setLoading(false));
+    }
   };
 }

@@ -1,13 +1,40 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 import PostModal from "./PostModal";
-function Main() {
+import { connect } from "react-redux";
+
+function Main(props) {
+  const [showModal, setShowModal] = useState("close");
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    switch (showModal) {
+      case "open":
+        setShowModal("close");
+        break;
+      case "close":
+        setShowModal("open");
+        break;
+      default:
+        setShowModal("close");
+        break;
+    }
+  };
+
   return (
     <Container>
       <ShareBox>
         <div>
-          <img src="/images/user.svg" alt="" />
-          <button>Start a post</button>
+          {props.user ? (
+            <img src={props.user.photoURL} />
+          ) : (
+            <img src="/images/user.svg" alt="" />
+          )}
+
+          <button onClick={handleClick}>Start a post</button>
         </div>
         <div>
           <button>
@@ -83,7 +110,7 @@ function Main() {
           </SocialActions>
         </Article>
       </div>
-      <PostModal />
+      <PostModal showModal={showModal} handleClick={handleClick} />
     </Container>
   );
 }
@@ -293,4 +320,14 @@ const SocialActions = styled.div`
     }
   }
 `;
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  //   signIn: () => dispatch(signInAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
