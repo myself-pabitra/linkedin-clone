@@ -1,7 +1,12 @@
 import { auth, provider, storage } from "../firebase";
 import db from "../firebase";
 import { SET_USER } from "./actionType";
-import { ref, uploadBytes } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 export const setUser = (payload) => ({
   type: SET_USER,
   user: payload,
@@ -45,12 +50,12 @@ export function signOutAPI() {
 export function postArticleAPI(payload) {
   return (dispatch) => {
     const storageRef = ref(storage, `images/${payload.image.name}`);
-    const upload = uploadBytes(storageRef, payload.image);
+    const upload = uploadBytesResumable(storageRef, payload.image);
     // dispatch(setLoading(true));
 
     if (payload.image != "") {
-      upload.on =
-        ("state-changed",
+      upload.on(
+        "state-changed",
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -62,7 +67,7 @@ export function postArticleAPI(payload) {
         },
         (error) => console.log(error.code),
         async () => {
-          const downloadURL = await upload.snapshot.storageRef.getDownloadURL();
+          const downloadURL = await getDownloadURL(upload.snapshot.ref);
           db.collection("articles").add({
             actor: {
               description: payload.user.email,
@@ -76,7 +81,8 @@ export function postArticleAPI(payload) {
             description: payload.description,
           });
           // dispatch(setLoading(false));
-        });
+        }
+      );
     } else if (payload.video) {
       db.collection("articles").add({
         actor: {
