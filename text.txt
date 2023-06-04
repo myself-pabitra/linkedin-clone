@@ -4,37 +4,14 @@ import React from "react";
 import { signOutAPI } from "../actions";
 
 function Header(props) {
-  const isMobile = window.innerWidth <= 768; // Check if the device is mobile
-
   return (
     <Container>
       <Content>
-        {isMobile ? (
-          <User>
-            <a>
-              {props.user && props.user.photoURL ? (
-                <img src={props.user.photoURL} alt="" />
-              ) : (
-                <img src="/images/user.svg" alt="" />
-              )}
-              <span>
-                Me
-                <img src="/images/down-icon.svg" alt="" />
-              </span>
-            </a>
-            <SignOut onClick={() => props.signOut()}>
-              <a>Sign Out</a>
-            </SignOut>
-          </User>
-        ) : (
-          <Logo>
-            <a href="/home">
-              <img src="/images/home-logo.svg" alt="" />
-            </a>
-          </Logo>
-        )}
-
-        {/* Rest of the header content */}
+        <Logo>
+          <a href="/home">
+            <img src="/images/home-logo.svg" alt="" />
+          </a>
+        </Logo>
         <Search>
           <div>
             <input type="text" placeholder="Search" />
@@ -75,10 +52,7 @@ function Header(props) {
                 <span>Notifications</span>
               </a>
             </NavList>
-          </NavListWrap>
-        </Nav>
-        {!isMobile && props.user && (
-          <>
+
             <User>
               <a>
                 {props.user && props.user.photoURL ? (
@@ -105,14 +79,12 @@ function Header(props) {
                 </span>
               </a>
             </Work>
-          </>
-        )}
+          </NavListWrap>
+        </Nav>
       </Content>
     </Container>
   );
 }
-
-// Remaining styled components and Redux mappings...
 
 const Container = styled.div`
   background-color: white;

@@ -61,13 +61,15 @@ const PostModal = (props) => {
               {/* <h2>Create a post</h2> */}
               <SharedContent>
                 <UserInfo>
-                  {props.user.photoURL ? (
+                  {props.user?.photoURL ? (
                     <img src={props.user.photoURL} />
                   ) : (
                     <img src="/images/user.svg" alt="" />
                   )}
+
                   <div>
-                    <span>{props.user.displayName}</span>
+                    {/* <span>{props.user.displayName}</span> */}
+                    <span>{props.user?.displayName || "User"}</span>
                     <p>Post to anyone</p>
                     {/* <img src="images/down-icon.svg" alt="" /> */}
                   </div>
@@ -271,6 +273,9 @@ const AssetButton = styled.button`
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
       rgba(0, 0, 0, 0.23) 0px 6px 6px;
   }
+  @media (max-width: 768px) {
+    height: 49px; /* Adjust the height as needed */
+  }
 `;
 
 const AttachAssets = styled.div`
@@ -282,6 +287,7 @@ const AttachAssets = styled.div`
     width: 55px;
     margin: 0 0 0 20px;
     @media (max-width: 768px) {
+      width: 47px; /* Adjust the width as needed */
       margin: 0px 0 0 14px;
     }
   }
@@ -330,9 +336,20 @@ const Editor = styled.div`
   }
 `;
 const UploadImage = styled.div`
+  /* text-align: center;
+  img {
+    width: 100%;
+  } */
+
   text-align: center;
   img {
     width: 100%;
+    height: auto;
+    max-height: 262px; /* Adjust the maximum height as needed */
+    object-fit: contain; /* or use "cover" to fill the container */
+    @media (max-width: 768px) {
+      max-height: 91px;
+    }
   }
 `;
 const mapStateToProps = (state) => {
