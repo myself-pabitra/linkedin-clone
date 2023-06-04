@@ -9,7 +9,8 @@ function LeftSide(props) {
         <UserInfo>
           <CardBackground />
           <a>
-            <Photo />
+            <Photo user={props.user} />
+
             <Link>
               Welcome, {props.user ? props.user.displayName : "there"} !
             </Link>
@@ -91,7 +92,9 @@ const CardBackground = styled.div`
 `;
 const Photo = styled.div`
   box-shadow: none;
-  background-image: url("/images/photo.svg");
+  /* background-image: url("/images/photo.svg"); */
+  /* {props.user ? props.user.displayName : "there"} */
+  background-image: url(${(props) => props.user ? props.user.photoURL : "/images/photo.svg"});
 
   width: 72px;
   height: 72px;
@@ -99,7 +102,8 @@ const Photo = styled.div`
   background-clip: content-box;
   background-color: white;
   background-position: center;
-  background-size: 60%;
+  background-size: 100%;
+  /* background-size: 60%; */
   background-repeat: no-repeat;
   border: 2px solid white;
   margin: -38px auto 12px;

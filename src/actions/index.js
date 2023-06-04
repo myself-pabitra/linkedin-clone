@@ -64,7 +64,7 @@ export function postArticleAPI(payload) {
     const upload = uploadBytesResumable(storageRef, payload.image);
     dispatch(setLoading(true));
 
-    if (payload.image != "") {
+    if (payload.image !== null && payload.image !== undefined) {
       upload.on(
         "state-changed",
         (snapshot) => {
@@ -81,10 +81,19 @@ export function postArticleAPI(payload) {
           const downloadURL = await getDownloadURL(upload.snapshot.ref);
           db.collection("articles").add({
             actor: {
-              description: payload.user.email,
-              title: payload.user.displayName,
+              description:
+                payload.user !== null && payload.user !== undefined
+                  ? payload.user.email
+                  : "",
+              title:
+                payload.user !== null && payload.user !== undefined
+                  ? payload.user.displayName
+                  : "",
               date: payload.timestamp,
-              image: payload.user.photoURL,
+              image:
+                payload.user !== null && payload.user !== undefined
+                  ? payload.user.photoURL
+                  : "",
             },
             video: payload.video,
             sharedImg: downloadURL,
@@ -97,10 +106,19 @@ export function postArticleAPI(payload) {
     } else if (payload.video) {
       db.collection("articles").add({
         actor: {
-          description: payload.user.email,
-          title: payload.user.displayName,
+          description:
+            payload.user !== null && payload.user !== undefined
+              ? payload.user.email
+              : "",
+          title:
+            payload.user !== null && payload.user !== undefined
+              ? payload.user.displayName
+              : "",
           date: payload.timestamp,
-          image: payload.user.photoURL,
+          image:
+            payload.user !== null && payload.user !== undefined
+              ? payload.user.photoURL
+              : "",
         },
         video: payload.video,
         sharedImg: "",
